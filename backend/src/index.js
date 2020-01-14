@@ -8,7 +8,8 @@ mongoose.connect(
   "mongodb+srv://omnistack:omnistack@cluster0-c0gfc.mongodb.net/week10?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   }
 );
 
