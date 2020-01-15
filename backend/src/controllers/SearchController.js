@@ -9,7 +9,7 @@ module.exports = {
 
     const devs = await Dev.find({
       techs: {
-        $in: techsArray
+        $in: techsA // const { techs } = req.body;rray
       },
       location: {
         $near: {
@@ -28,6 +28,10 @@ module.exports = {
   async update(req, res) {
     const { id } = req.params;
     const data = req.body;
+
+    if (data.techs) {
+      data.techs = parseStringAsArray(data.techs);
+    }
 
     const dev = await Dev.findByIdAndUpdate(id, data, { new: true });
 
