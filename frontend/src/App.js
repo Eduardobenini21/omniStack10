@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import api from "./services/api";
 
 import "./global.css";
 import "./App.css";
@@ -9,6 +10,10 @@ function App() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
+  const [github_username, setGithubUsername] = useState("");
+  const [techs, setTechs] = useState("");
+
+  const [devs, setDevs] = useState([]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -26,19 +31,56 @@ function App() {
     );
   }, []);
 
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get("/devs");
+
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  }, [devs]);
+
+  async function handleAddDev(e) {
+    e.preventDefault();
+
+    const response = await api.post("/devs", {
+      github_username,
+      techs,
+      latitude,
+      longitude
+    });
+
+    setDevs([...devs, response.data]);
+    setGithubUsername("");
+    setTechs("");
+  }
+
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <form>
+        <form onSubmit={handleAddDev}>
           <div className="input-block">
             <label htmlFor="github_username">Usuário do Github</label>
-            <input name="github_username" id="github_username" required />
+            <input
+              name="github_username"
+              id="github_username"
+              value={github_username}
+              onChange={e => setGithubUsername(e.target.value)}
+              required
+            />
           </div>
 
           <div className="input-block">
             <label htmlFor="techs">Tecnologias</label>
-            <input name="techs" id="techs" required />
+            <input
+              name="techs"
+              id="techs"
+              value={techs}
+              onChange={e => setTechs(e.target.value)}
+              required
+            />
           </div>
 
           <div className="input-group">
@@ -49,6 +91,7 @@ function App() {
                 name="latitude"
                 id="latitude"
                 value={latitude}
+                onChange={e => setLatitude(e.target.value)}
                 required
               />
             </div>
@@ -60,6 +103,7 @@ function App() {
                 name="longitude"
                 id="longitude"
                 value={longitude}
+                onChange={e => setLongitude(e.target.value)}
                 required
               />
             </div>
@@ -71,62 +115,21 @@ function App() {
 
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
-                alt="Vinícius Fraga"
-              />
-              <div className="user-info">
-                <strong>Diego Fernandes</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>
-              Web Developer. Sempre em busca de informação, desafios e
-              aprendizado, principalmente no que se refere às tecnologias
-              baseadas em JS.
-            </p>
-            <a href="https://github.com/vinifraga">Acessar perfil</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
-                alt="Vinícius Fraga"
-              />
-              <div className="user-info">
-                <strong>Diego Fernandes</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>
-              Web Developer. Sempre em busca de informação, desafios e
-              aprendizado, principalmente no que se refere às tecnologias
-              baseadas em JS.
-            </p>
-            <a href="https://github.com/vinifraga">Acessar perfil</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
-                alt="Vinícius Fraga"
-              />
-              <div className="user-info">
-                <strong>Diego Fernandes</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>
-              Web Developer. Sempre em busca de informação, desafios e
-              aprendizado, principalmente no que se refere às tecnologias
-              baseadas em JS.
-            </p>
-            <a href="https://github.com/vinifraga">Acessar perfil</a>
-          </li>
+          {devs.map(dev => (
+            <li key={dev._id} className="dev-item">
+              <header>
+                <img src={dev.avatar_url} alt={dev.name} />
+                <div className="user-info">
+                  <strong>{dev.name}</strong>
+                  <span>{dev.techs.join(", ")}</span>
+                </div>
+              </header>
+              <p>{dev.bio}</p>
+              <a href={`https://github.com/${dev.github_username}`}>
+                Acessar perfil
+              </a>
+            </li>
+          ))}
         </ul>
       </main>
     </div>
