@@ -29,7 +29,7 @@ module.exports = {
 
       const techsArray = parseStringAsArray(techs);
 
-      const dev = await Dev.create({
+      dev = await Dev.create({
         github_username,
         name,
         avatar_url,
@@ -40,5 +40,26 @@ module.exports = {
     }
 
     return res.json(dev);
+  },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const data = req.body;
+
+    if (data.techs) {
+      data.techs = parseStringAsArray(data.techs);
+    }
+
+    const dev = await Dev.findByIdAndUpdate(id, data, { new: true });
+
+    return res.json(dev);
+  },
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    await Dev.findByIdAndDelete(id);
+
+    return res.json({ message: "user removed" });
   }
 };
