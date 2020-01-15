@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./global.css";
 import "./App.css";
 import "./Sidebar.css";
+import "./Main.css";
 
 function App() {
   return (
@@ -36,7 +37,66 @@ function App() {
         </form>
       </aside>
 
-      <main></main>
+      <main>
+        <ul>
+          <li className="dev-item">
+            <header>
+              <img
+                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
+                alt="Vinícius Fraga"
+              />
+              <div className="user-info">
+                <strong>Diego Fernandes</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>
+              Web Developer. Sempre em busca de informação, desafios e
+              aprendizado, principalmente no que se refere às tecnologias
+              baseadas em JS.
+            </p>
+            <a href="https://github.com/vinifraga">Acessar perfil</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img
+                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
+                alt="Vinícius Fraga"
+              />
+              <div className="user-info">
+                <strong>Diego Fernandes</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>
+              Web Developer. Sempre em busca de informação, desafios e
+              aprendizado, principalmente no que se refere às tecnologias
+              baseadas em JS.
+            </p>
+            <a href="https://github.com/vinifraga">Acessar perfil</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img
+                src="https://avatars0.githubusercontent.com/u/37725197?s=460&v=4"
+                alt="Vinícius Fraga"
+              />
+              <div className="user-info">
+                <strong>Diego Fernandes</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>
+              Web Developer. Sempre em busca de informação, desafios e
+              aprendizado, principalmente no que se refere às tecnologias
+              baseadas em JS.
+            </p>
+            <a href="https://github.com/vinifraga">Acessar perfil</a>
+          </li>
+        </ul>
+      </main>
     </div>
   );
 }
