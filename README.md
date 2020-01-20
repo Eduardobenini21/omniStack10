@@ -1,6 +1,5 @@
-# DevRadar - Aplicação Omnistack 10.0
-
-Nessa semana será desenvolvida uma aplicação cujo objetivo é apresentar em um mapa os devs encontrados naquela região que têm conhecimento na tech informada no campo de busca.
+# DevRadar -  Omnistack 10.0
+Tive a honra de participar de uma semana incrível, então ao concluir o projeto ficou assim...
 
 As tecnologias utilizadas foram:
 
